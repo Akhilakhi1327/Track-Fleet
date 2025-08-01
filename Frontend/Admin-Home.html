@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Forms / Layouts - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link rel="stylesheet" href="assets/css/">
+
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css">
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <script>
+     document.addEventListener("DOMContentLoaded", () => {
+      const trackIdInput = document.getElementById('trackId');
+      // Generate a random alphanumeric string (8 characters in this example)
+      const randomTrackId = Math.random().toString(36).substring(2, 20).toUpperCase();
+      // Set the input's value to the random track id
+      trackIdInput.value = randomTrackId;
+
+      // Add event listener for Set Default button
+      const setDefaultBtn = document.getElementById('setDefaultBtn');
+      setDefaultBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent form submission
+
+        // Populate Shipper Details
+        document.getElementById('shipperName').value = 'John Doe';
+        document.getElementById('shipperPhone').value = '1234567890';
+        document.getElementById('shipperAddress').value = '123 Shipper Street, City, Country';
+        document.getElementById('shipperEmail').value = 'shipper@example.com';
+
+        // Populate Receiver Details
+        document.getElementById('receiverName').value = 'Jane Smith';
+        document.getElementById('receiverPhone').value = '0987654321';
+        document.getElementById('receiverAddress').value = '456 Receiver Avenue, Town, Country';
+        document.getElementById('receiverEmail').value = 'receiver@example.com';
+
+        // Populate Shipment Details
+        document.querySelector('input[name="weight"]').value = '10';
+        document.querySelector('input[name="courier"]').value = 'FastTrack Logistics';
+        document.querySelector('input[name="packages"]').value = '1';
+        document.querySelector('input[name="mode"]').value = 'Express';
+        document.querySelector('input[name="product"]').value = 'Electronics';
+        document.querySelector('input[name="quantity"]').value = '2';
+        
+        // Set Payment Mode
+        document.querySelector('select[name="payment_mode"]').value = 'UPI';
+        
+        document.querySelector('input[name="station"]').value = 'Central Station';
+        document.querySelector('input[name="departure_time"]').value = '14:30';
+        
+        // Set Origin
+        document.querySelector('select[name="origin"]').value = 'AP';
+        
+        // Set Destination
+        document.querySelector('select[name="destination"]').value = 'TEL';
+        
+        document.querySelector('input[name="pickup_date"]').value = '2024-03-26';
+        document.querySelector('input[name="pickup_time"]').value = '10:00';
+        document.querySelector('input[name="expected_delivery"]').value = '2-3 Business Days';
+        
+        document.querySelector('textarea[name="comments"]').value = 'Standard shipment with fragile items. Handle with care.';
+      });
+    });
+    </script>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="#" class="logo d-flex align-items-center">
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <span class="d-none d-lg-block">Admin</span>
+      </a>
+      <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
+    </div><!-- End Logo -->
+
+   
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Shipment</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="All-Shipments.html">
+              <i class="bi bi-circle"></i><span>All Shipment</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="active">
+              <i class="bi bi-circle"></i><span>Add Shipment</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Add New Shipment</h1>
+      
+    </div>
+    <section class="section">
+      <form action="http://localhost:3000/addShipment" method="POST">
+        <div class="col-lg-12">
+          <input type="text" class="form-control mb-2" id="trackId" name="track_id" placeholder="Tracking ID" required="true">
+        </div>
+        <div class="row">
+          <!-- Shipper Details -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Shipper Details</h5>
+                <div class="row mb-3">
+                  <label for="shipperName" class="col-sm-2 col-form-label">Shipper Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="shipperName" name="shipper_name" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="shipperPhone" class="col-sm-2 col-form-label">Phone Number</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="shipperPhone" name="shipper_phone" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="shipperAddress" class="col-sm-2 col-form-label">Address</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="shipperAddress" name="shipper_address" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="shipperEmail" class="col-sm-2 col-form-label" >Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="shipperEmail" name="shipper_email" required="true">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Receiver Details -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Receiver Details</h5>
+                <div class="row mb-3">
+                  <label for="receiverName" class="col-sm-2 col-form-label">Receiver Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="receiverName" name="receiver_name" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="receiverPhone" class="col-sm-2 col-form-label">Phone Number</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="receiverPhone" name="receiver_phone" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="receiverAddress" class="col-sm-2 col-form-label">Address</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="receiverAddress" name="receiver_address" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="receiverEmail" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="receiverEmail" name="receiver_email" required="true">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Shipment Details -->
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Shipment Details</h4>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="weight" placeholder="Weight" required="true">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="courier" placeholder="Courier" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" name="packages" placeholder="Packages" required="true">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="mode" placeholder="Mode" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="product" placeholder="Product" required="true">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" name="quantity" placeholder="Quantity" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <select class="form-select" name="payment_mode">
+                      <option selected disabled>--Payment Mode--</option>
+                      <option value="COD">COD</option>
+                      <option value="UPI">UPI</option>
+                      <option value="DEBIT">DEBIT</option>
+                      <option value="CREDIT">CREDIT</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="station" placeholder="Station" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="departure_time" placeholder="Departure Time" required="true">
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-select" name="origin">
+                      <option selected disabled>--Origin--</option>
+                      <option value="AP">AP</option>
+                      <option value="MP">MP</option>
+                      <option value="TEL">TEL</option>
+                      <option value="KAR">KAR</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <select class="form-select" name="destination">
+                      <option selected disabled>--Destination--</option>
+                      <option value="AP">AP</option>
+                      <option value="MP">MP</option>
+                      <option value="TEL">TEL</option>
+                      <option value="KAR">KAR</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" class="form-control" name="pickup_date" placeholder="PickUp Date" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <input type="time" class="form-control" name="pickup_time" placeholder="PickUp Time" required="true">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="expected_delivery" placeholder="Expected Delivery" required="true">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <textarea class="form-control" name="comments" rows="3" placeholder="Comments"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Submit Buttons -->
+        <div class="text-center">
+          <button type="button" id="setDefaultBtn" class="btn btn-primary me-2">Set Default</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-secondary">Save Draft</button>
+        </div>
+      </form>
+    </section>
+  </main>
+   <!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
