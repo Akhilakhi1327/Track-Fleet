@@ -14,7 +14,7 @@ app.use(cors());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root", // Your MySQL username
-  password: "0115", // Your MySQL password
+  password: "1327", // Your MySQL password
   database: "shipment_db",
 });
 
@@ -115,11 +115,11 @@ app.post("/addShipment", (req, res) => {
 
 app.get("/orders", (req, res) => {
   db.query("SELECT * FROM orders", (err, results) => {
-      if (err) {
-          res.status(500).json({ error: err.message });
-          return;
-      }
-      res.json(results);
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json(results);
   });
 });
 
@@ -128,25 +128,25 @@ app.get('/u_orders', (req, res) => {
   console.log("Received username:", username, "Type:", typeof username); // Debugging log
   // username = username.replace(/^"|"$/g, "");
   if (username) {
-      const query = "SELECT * FROM uorders WHERE username = ?";
-      db.query(query, [username], (err, results) => {  // Corrected parameter passing
-          if (err) {
-              console.error("Error fetching orders:", err);
-              return res.status(500).json({ error: "Database query failed" });
-          }
-          console.log("Query Results:", results); // Log results
-          res.json(results);
-      });
+    const query = "SELECT * FROM uorders WHERE username = ?";
+    db.query(query, [username], (err, results) => {  // Corrected parameter passing
+      if (err) {
+        console.error("Error fetching orders:", err);
+        return res.status(500).json({ error: "Database query failed" });
+      }
+      console.log("Query Results:", results); // Log results
+      res.json(results);
+    });
   } else {
-      console.log("No username provided, fetching all orders.");
-      const query = "SELECT * FROM orders"; // Fetch all orders if no username is provided
-      db.query(query, (err, results) => {
-          if (err) {
-              console.error("Error fetching orders:", err);
-              return res.status(500).json({ error: "Database query failed" });
-          }
-          res.json(results);
-      });
+    console.log("No username provided, fetching all orders.");
+    const query = "SELECT * FROM orders"; // Fetch all orders if no username is provided
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error("Error fetching orders:", err);
+        return res.status(500).json({ error: "Database query failed" });
+      }
+      res.json(results);
+    });
   }
 });
 
@@ -155,17 +155,17 @@ app.post('/u_orders', (req, res) => {
   const { order_time, order_place, delivery_time, username } = req.body;
 
   if (!order_time || !order_place || !delivery_time || !username) {
-      return res.status(400).json({ error: "All fields are required" });
+    return res.status(400).json({ error: "All fields are required" });
   }
 
   const query = "INSERT INTO uorders (order_time, order_place, delivery_time, username) VALUES (?, ?, ?, ?)";
 
   db.query(query, [order_time, order_place, delivery_time, username], (err, result) => {
-      if (err) {
-          console.error("Error inserting order:", err);
-          return res.status(500).json({ error: "Database insert failed" });
-      }
-      res.status(201).json({ message: "Order added successfully", orderId: result.insertId });
+    if (err) {
+      console.error("Error inserting order:", err);
+      return res.status(500).json({ error: "Database insert failed" });
+    }
+    res.status(201).json({ message: "Order added successfully", orderId: result.insertId });
   });
 });
 
@@ -194,7 +194,7 @@ app.get("/getDetails", (req, res) => {
   const { track_id } = req.query;
   if (!track_id) {
     return res.status(400).json({ error: "Track ID is required" });
-}
+  }
   const selectQuery = `
     SELECT 
       track_id,
