@@ -1,88 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>All Shipments - Admin Panel</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>All Shipments - Admin Panel</title>
+    
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary-color: #6366f1;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-muted: #64748b;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Nunito:300,400,600,700|Poppins:300,400,500,600,700" rel="stylesheet">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet">
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
+        .sidebar-nav {
+            list-style: none;
+            padding: 2rem 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 0;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-right: 4px solid white;
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        /* Header */
+        .page-header {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .page-header h2 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .refresh-btn {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .bulk-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-select, .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
+
+        #searchBox {
+            max-width: 250px;
+            background-color: var(--light-bg);
+        }
+
+        #searchBox::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-secondary {
+            background: var(--text-muted);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark-color);
+            transform: translateY(-1px);
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .table {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .table thead th {
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-color: var(--border-color);
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(79, 70, 229, 0.02);
+            transform: scale(1.001);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-delivered {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-shipped {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .status-cancelled {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .btn-edit:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .btn-delete:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-view {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .btn-view:hover {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        /* Custom Checkboxes */
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .page-header h2 {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .bulk-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            #searchBox {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            .table {
+                min-width: 800px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .page-header {
+                padding: 1.5rem;
+            }
+            
+            .controls-section {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="All-Shipments.html">
+                    <i class="bi bi-journal-text"></i>
+                    <span>All Shipments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Admin-Home.html">
+                    <i class="bi bi-plus-circle"></i>
+                    <span>Add Shipment</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="dashboard.html">
-          <i class="bi bi-grid"></i> <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="All-Shipments.html">
-          <i class="bi bi-journal-text"></i> <span>All Shipments</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="Admin-Home.html">
-          <i class="bi bi-plus-circle"></i> <span>Add Shipment</span>
-        </a>
-      </li>
-    </ul>
-  </aside>
-  
-  <!-- ======= Main Content ======= -->
-  <main id="main" class="main">
-    <div class="container mt-4">
-      <h2>All Shipments <button class="btn btn-primary btn-sm" onclick="fetchShipments()">Refresh</button></h2>
+    <!-- ======= Main Content ======= -->
+    <main id="main" class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>
+                    All Shipments
+                    <button class="btn refresh-btn" onclick="fetchShipments()">
+                        <i class="bi bi-arrow-clockwise me-2"></i>
+                        Refresh
+                    </button>
+                </h2>
+            </div>
 
-      <!-- Bulk Actions -->
-      <div class="d-flex mb-3">
-        <select id="bulkAction" class="form-select me-2" style="width: 150px;">
-          <option selected>Bulk actions</option>
-          <option value="delete">Delete</option>
-          <option value="delivered">Mark as Delivered</option>
-        </select>
-        <button class="btn btn-secondary" onclick="applyBulkAction()">Apply</button>
-        <input type="text" id="searchBox" class="form-control ms-2" placeholder="Search Shipment" style="max-width: 200px;" onkeyup="filterShipments()">
-      </div>
+            <!-- Controls Section -->
+            <div class="controls-section">
+                <div class="bulk-actions">
+                    <select id="bulkAction" class="form-select" style="width: 180px;">
+                        <option selected>Bulk actions</option>
+                        <option value="delete">Delete Selected</option>
+                        <option value="delivered">Mark as Delivered</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="applyBulkAction()">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Apply
+                    </button>
+                    <input type="text" id="searchBox" class="form-control" placeholder="🔍 Search shipments..." onkeyup="filterShipments()">
+                </div>
+            </div>
 
-      <!-- Shipments Table -->
-      <table class="table table-striped">
-        <thead class="table-light">
-          <tr>
-            <th><input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes(this)"></th>
-            <th>Tracking Number</th>
-            <th>Shipment Owner</th>
-            <th>Agent</th>
-            <th>Shipper Name</th>
-            <th>Receiver Name</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="shipmentTableBody">
-          <!-- Shipments will be inserted dynamically -->
-        </tbody>
-      </table>
-    </div>
-  </main>
+            <!-- Shipments Table -->
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes(this)">
+                            </th>
+                            <th>Tracking Number</th>
+                            <th>Shipment Owner</th>
+                            <th>Agent</th>
+                            <th>Shipper Name</th>
+                            <th>Receiver Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipmentTableBody">
+                        <!-- Sample Data for Preview -->
+                        <tr>
+                            <td><input type="checkbox" class="shipment-checkbox"></td>
+                            <td><strong>TRK001234567</strong></td>
+                            <td>John Doe</td>
+                            <td>Agent Smith</td>
+                            <td>ABC Company</td>
+                            <td>Jane Smith</td>
+                            <td>2025-01-15</td>
+                            <td><span class="status-badge status-delivered">Delivered</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn btn-view" title="View Details">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="action-btn btn-edit" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="action-btn btn-delete" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="shipment-checkbox"></td>
+                            <td><strong>TRK001234568</strong></td>
+                            <td>Mary Johnson</td>
+                            <td>Agent Brown</td>
+                            <td>XYZ Corp</td>
+                            <td>Bob Wilson</td>
+                            <td>2025-01-20</td>
+                            <td><span class="status-badge status-shipped">Shipped</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn btn-view" title="View Details">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="action-btn btn-edit" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="action-btn btn-delete" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="shipment-checkbox"></td>
+                            <td><strong>TRK001234569</strong></td>
+                            <td>Robert Davis</td>
+                            <td>Agent Jones</td>
+                            <td>Tech Solutions</td>
+                            <td>Alice Cooper</td>
+                            <td>2025-01-22</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn btn-view" title="View Details">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="action-btn btn-edit" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="action-btn btn-delete" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
-  <!-- JavaScript -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
-
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Keep your original script.js reference -->
+    <script src="script.js"></script>
 </body>
 </html>

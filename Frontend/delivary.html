@@ -1,154 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipment Details</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .shipment-details {
-            display: none;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007BFF;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .back-btn:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipment Details</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* General Layout */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1E3A8A;
+      margin-bottom: 25px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #14B8A6;
+      outline: none;
+      box-shadow: 0 0 6px rgba(20, 184, 166, 0.3);
+    }
+
+    /* Buttons */
+    button {
+      background-color: #1E3A8A;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #14B8A6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(20,184,166,0.3);
+    }
+
+    /* Shipment Details */
+    .shipment-details {
+      display: none;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-top: 20px;
+      animation: slideIn 0.4s ease;
+    }
+
+    .shipment-details p {
+      font-size: 1rem;
+      margin: 10px 0;
+      color: #111827;
+    }
+
+    .shipment-details strong {
+      color: #1E3A8A;
+    }
+
+    /* Back Button */
+    .back-btn {
+      display: inline-block;
+      margin-top: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+      background-color: #007BFF;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Error Message */
+    .error {
+      color: #DC2626;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Shipment Details</h1>
+  <h1>Shipment Details</h1>
 
-    <div class="form-group">
-        <label for="trackIdInput">Enter Track ID:</label>
-        <input type="text" id="trackIdInput" placeholder=" ">
-        <button onclick="fetchShipment()">Fetch Shipment</button>
-    </div>
+  <div class="form-group">
+    <label for="trackIdInput">Enter Track ID:</label>
+    <input type="text" id="trackIdInput" placeholder="Enter your tracking number">
+    <button onclick="fetchShipment()">Fetch Shipment</button>
+  </div>
 
-    <div id="errorMessage" class="error"></div>
+  <div id="errorMessage" class="error"></div>
 
-    <div class="shipment-details" id="shipmentDetails">
-        <p><strong>Track ID:</strong> <span id="trackId">-</span></p>
-        <p><strong>Shipper:</strong> <span id="shipperName">-</span></p>
-        <p><strong>Receiver:</strong> <span id="receiverName">-</span></p>
-        <p><strong>Pickup Date:</strong> <span id="pickupDate">-</span></p>
-        <p><strong>Status:</strong> 
-            <select id="statusSelect">
-                <option value="Pending">Pending</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Delivered">Delivered</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
-        </p>
-        <button onclick="updateShipment()">Update Status</button>
-    </div>
+  <div class="shipment-details" id="shipmentDetails">
+    <p><strong>Track ID:</strong> <span id="trackId">-</span></p>
+    <p><strong>Shipper:</strong> <span id="shipperName">-</span></p>
+    <p><strong>Receiver:</strong> <span id="receiverName">-</span></p>
+    <p><strong>Pickup Date:</strong> <span id="pickupDate">-</span></p>
+    <p><strong>Status:</strong> 
+      <select id="statusSelect">
+        <option value="Pending">Pending</option>
+        <option value="In Transit">In Transit</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </p>
+    <button onclick="updateShipment()">Update Status</button>
+  </div>
 
-    <a href="index.html" class="back-btn">Back to Shipments</a>
+  <a href="index.html" class="back-btn">⬅ Back to Shipments</a>
 </div>
 
 <script>
-    function fetchShipment() {
-        const trackId = document.getElementById("trackIdInput").value.trim();
-        const errorMessage = document.getElementById("errorMessage");
-        const detailsDiv = document.getElementById("shipmentDetails");
+  function fetchShipment() {
+    const trackId = document.getElementById("trackIdInput").value.trim();
+    const errorMessage = document.getElementById("errorMessage");
+    const detailsDiv = document.getElementById("shipmentDetails");
 
-        if (!trackId) {
-            errorMessage.textContent = "Please enter a Track ID.";
-            detailsDiv.style.display = "none";
-            return;
-        }
-
-        const shipments = JSON.parse(localStorage.getItem("shipments")) || [];
-        const shipment = shipments.find(s => s.track_id === trackId);
-
-        if (!shipment) {
-            errorMessage.textContent = "Shipment not found!";
-            detailsDiv.style.display = "none";
-            return;
-        }
-
-     
-        document.getElementById("trackId").textContent = shipment.track_id;
-        document.getElementById("shipperName").textContent = shipment.shipper_name;
-        document.getElementById("receiverName").textContent = shipment.receiver_name;
-        document.getElementById("pickupDate").textContent = shipment.pickup_date ? new Date(shipment.pickup_date).toISOString().split("T")[0] : "-";
-        document.getElementById("statusSelect").value = shipment.status || "Pending";
-
-        detailsDiv.style.display = "block";
-        errorMessage.textContent = "";
+    if (!trackId) {
+      errorMessage.textContent = "Please enter a Track ID.";
+      detailsDiv.style.display = "none";
+      return;
     }
 
-    function updateShipment() {
-        const trackId = document.getElementById("trackId").textContent;
-        const newStatus = document.getElementById("statusSelect").value;
+    const shipments = JSON.parse(localStorage.getItem("shipments")) || [];
+    const shipment = shipments.find(s => s.track_id === trackId);
 
-        let shipments = JSON.parse(localStorage.getItem("shipments")) || [];
-        const shipmentIndex = shipments.findIndex(s => s.track_id === trackId);
-
-        if (shipmentIndex > -1) {
-            shipments[shipmentIndex].status = newStatus;
-            localStorage.setItem("shipments", JSON.stringify(shipments));
-            alert("Shipment status updated successfully!");
-        } else {
-            alert("Failed to update shipment.");
-        }
+    if (!shipment) {
+      errorMessage.textContent = "Shipment not found!";
+      detailsDiv.style.display = "none";
+      return;
     }
+
+    document.getElementById("trackId").textContent = shipment.track_id;
+    document.getElementById("shipperName").textContent = shipment.shipper_name;
+    document.getElementById("receiverName").textContent = shipment.receiver_name;
+    document.getElementById("pickupDate").textContent = shipment.pickup_date ? new Date(shipment.pickup_date).toISOString().split("T")[0] : "-";
+    document.getElementById("statusSelect").value = shipment.status || "Pending";
+
+    detailsDiv.style.display = "block";
+    errorMessage.textContent = "";
+  }
+
+  function updateShipment() {
+    const trackId = document.getElementById("trackId").textContent;
+    const newStatus = document.getElementById("statusSelect").value;
+
+    let shipments = JSON.parse(localStorage.getItem("shipments")) || [];
+    const shipmentIndex = shipments.findIndex(s => s.track_id === trackId);
+
+    if (shipmentIndex > -1) {
+      shipments[shipmentIndex].status = newStatus;
+      localStorage.setItem("shipments", JSON.stringify(shipments));
+      alert("Shipment status updated successfully!");
+    } else {
+      alert("Failed to update shipment.");
+    }
+  }
 </script>
 </body>
 </html>
-
-
-
